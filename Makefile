@@ -7,6 +7,7 @@ PROGRAM_DIR=/usr/bin
 
 
 archinstall:
+	pip install -r requirements.txt
 	PROGRAM_NAME=archtorify
 	$(MAKE) archuninstall
 	yes | pacman -S git
@@ -37,6 +38,7 @@ archuninstall:
 
 
 kaliinstall:
+	pip install -r requirements.txt
 	PROGRAM_NAME=kalitorify
 	$(MAKE) kaliuninstall
 	apt-get install git
