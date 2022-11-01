@@ -1,4 +1,4 @@
-PROGRAM_NAME=archtorify
+
 DATA_DIR=/usr/share
 BACKUP_DIR=/var/lib
 LICENSE_DIR=$(DATA_DIR)/licenses
@@ -7,6 +7,7 @@ PROGRAM_DIR=/usr/bin
 
 
 archinstall:
+	PROGRAM_NAME=archtorify
 	$(MAKE) archuninstall
 	yes | pacman -S git
 	git clone https://github.com/brainfucksec/archtorify
@@ -36,9 +37,10 @@ archuninstall:
 
 
 kaliinstall:
+	PROGRAM_NAME=kalitorify
 	$(MAKE) kaliuninstall
 	apt-get install git
-	git clone https://github.com/bainfucksec/kalitorify
+	git clone https://github.com/brainfucksec/kalitorify
 	install -Dm644 ./kalitorify/README.md $(DOC_DIR)/$(PROGRAM_NAME)/README.md
 	install -Dm755 ./kalitorify/kalitorify.sh $(PROGRAM_DIR)/$(PROGRAM_NAME)
 	mkdir -p $(DATA_DIR)/$(PROGRAM_NAME)/data
