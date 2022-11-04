@@ -3,6 +3,27 @@ import os
 import subprocess
 from subprocess import check_output
 
+def disconnect():
+    subprocess.call([torify, "-c"], stdout=open(os.devnull, "w"), stderr=subprocess.STDOUT)
+
+    file = open(path, "r")
+    replaced_content = ""
+    for line in file:
+
+        line = line.strip()
+        if "ExitNodes" in line:
+            new_line = ""
+        elif line == "AutomapHostsOnResolve 0":
+            new_line = "AutomapHostsOnResolve 1"
+        else:
+            new_line = line
+        replaced_content = replaced_content + new_line + "\n"
+
+    file.close()
+    write_file = open(path, "w")
+    write_file.write(replaced_content)
+    write_file.close()
+
 
 os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -34,11 +55,11 @@ exitnode = input("choose what you want to do:\n[0] disconnect your proxy\n[1] co
 
 if exitnode == "0":
     os.system('cls' if os.name == 'nt' else 'clear')
-    subprocess.call([torify, "-c"], stdout=open(os.devnull, "w"), stderr=subprocess.STDOUT)
+    disconnect()
     print("----------------------------------------------------------------------------\nDisconnected\n----------------------------------------------------------------------------")
 
 elif exitnode == "1":
-    subprocess.call([torify, "-c"], stdout=open(os.devnull, "w"), stderr=subprocess.STDOUT)
+    disconnect()
     os.system('cls' if os.name == 'nt' else 'clear')
     exitnode = input("----------------------------------------------------------------------------\nchoose the country you want the proxy in (web extension format ex: fr): ")
     file = open(path, "r")
@@ -50,8 +71,6 @@ elif exitnode == "1":
         if "ExitNodes" in line:
             new_line = "ExitNodes {" + exitnode + "} StrictNodes 1"
             exists = True
-        elif line == "VirtualAddrNetworkIPv4 10.192.0.0/10":
-            new_line = "VirtualAddrNetworkIPv4 10.192.0.0/10"
         elif line == "AutomapHostsOnResolve 1":
             new_line = "AutomapHostsOnResolve 0"
         else:
